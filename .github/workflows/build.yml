@@ -44,7 +44,8 @@ jobs:
           repository: samples/
           dockerfile: './src/adservice/Dockerfile'
           registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          tags: adservice:latest
+          tags: adservice
+          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/adservice:latest
           push: true    
      
       
