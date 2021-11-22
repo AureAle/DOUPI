@@ -11,78 +11,78 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  code-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "5.0.201"
-      - name: Go Unit Tests
-        timeout-minutes: 10
-        run: |
-          for SERVICE in "shippingservice" "productcatalogservice"; do
-            echo "testing $SERVICE..."
-            pushd src/$SERVICE
-            go test
-            popd
-          done
-      - name: C# Unit Tests
-        timeout-minutes: 10
-        run: |
-          dotnet test src/cartservice/
+  # code-tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-dotnet@v1
+  #       with:
+  #         dotnet-version: "5.0.201"
+  #     - name: Go Unit Tests
+  #       timeout-minutes: 10
+  #       run: |
+  #         for SERVICE in "shippingservice" "productcatalogservice"; do
+  #           echo "testing $SERVICE..."
+  #           pushd src/$SERVICE
+  #           go test
+  #           popd
+  #         done
+  #     - name: C# Unit Tests
+  #       timeout-minutes: 10
+  #       run: |
+  #         dotnet test src/cartservice/
 
-  # This workflow contains a single job called "build"
-  build:
-    if: ${{ !failure() }}
-    needs: [code-tests]
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  # # This workflow contains a single job called "build"
+  # build:
+  #   if: ${{ !failure() }}
+  #   needs: [code-tests]
+  #   # The type of runner that the job will run on
+  #   runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    strategy:
-      matrix:
-        url:
-          [
-            "adservice",
-            "cartservice/src",
-            "checkoutservice",
-            "currencyservice",
-            "emailservice",
-            "frontend",
-            "loadgenerator",
-            "paymentservice",
-            "productcatalogservice",
-            "recommendationservice",
-            "shippingservice",
-          ]
-    steps:
-      # Checks-out your repository, Clones the repository into the job environment
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@v2
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   strategy:
+  #     matrix:
+  #       url:
+  #         [
+  #           "adservice",
+  #           "cartservice/src",
+  #           "checkoutservice",
+  #           "currencyservice",
+  #           "emailservice",
+  #           "frontend",
+  #           "loadgenerator",
+  #           "paymentservice",
+  #           "productcatalogservice",
+  #           "recommendationservice",
+  #           "shippingservice",
+  #         ]
+  #   steps:
+  #     # Checks-out your repository, Clones the repository into the job environment
+  #     - name: "Checkout GitHub Action"
+  #       uses: actions/checkout@v2
 
-      - name: "Login via Azure CLI"
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #     - name: "Login via Azure CLI"
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Docker Login
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+  #     - name: Docker Login
+  #       uses: azure/docker-login@v1
+  #       with:
+  #         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+  #         username: ${{ secrets.REGISTRY_USERNAME }}
+  #         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run: |
-          docker build src/${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
+  #     - run: |
+  #         docker build src/${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
+  #         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
 
   deploy:
-    if: ${{ !failure() }}
-    needs: [build]
+    # if: ${{ !failure() }}
+    # needs: [build]
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository, Clones the repository into the job environment
+      
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v2
 
@@ -99,4 +99,4 @@ jobs:
           az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
 
       - run: |
-          helm install boutique boutiquechart
+          helm install boutique boutiquechart/
