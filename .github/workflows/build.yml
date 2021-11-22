@@ -57,16 +57,16 @@ jobs:
   code-tests:
     runs-on: self-hosted
     steps:
-        uses: actions/checkout@v2
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "5.0.201"
-      - name: Go Unit Tests
-        timeout-minutes: 10
-      - run: |
-          for SERVICE in "shippingservice" "productcatalogservice"; do
-            echo "testing $SERVICE..."
-            pushd src/$SERVICE
-            go test
-            popd
-          done
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.201'
+    - name: Go Unit Tests
+      timeout-minutes: 10
+      run: |
+        for SERVICE in "shippingservice" "productcatalogservice"; do
+          echo "testing $SERVICE..."
+          pushd src/$SERVICE
+          go test
+          popd
+        done
