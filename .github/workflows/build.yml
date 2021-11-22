@@ -30,7 +30,7 @@ jobs:
       - name: C# Unit Tests
         timeout-minutes: 10
         run: |
-          dotnet test src/cartservice/          
+          dotnet test src/cartservice/
 
   # This workflow contains a single job called "build"
   build:
@@ -76,3 +76,27 @@ jobs:
       - run: |
           docker build src/${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
+
+  deploy:
+    if: ${{ !failure() }}
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository, Clones the repository into the job environment
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v2
+
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v1
+
+      - run: |
+          az account set --subscription c4774376-bc4c-48e6-93eb-c0ac26c6345d
+          az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
+
+      - run: |
+          helm install BoutiqueChart/
