@@ -41,9 +41,9 @@ jobs:
         uses: docker/build-push-action@v1.1.0
         with:          
           path: .
-          repository: samples/adservice
+          repository: ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/
           dockerfile: './src/adservice/Dockerfile'
-          tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/adservice:latest
+          tags: adservice:latest
           push: true    
      
       
