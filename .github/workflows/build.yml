@@ -98,6 +98,4 @@ jobs:
           az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
 
       - run: |
-          pwd
-          ls -al
-          helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart 
+          helm install boutique -n boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart 
