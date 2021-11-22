@@ -35,7 +35,7 @@ jobs:
           registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           path: .
           dockerfile: './src/adservice/Dockerfile'
-          tags: ${{secrets.REGISTRY_LOGIN_SERVER}}/samples/adservice:latest
+          tags: ${{secrets.REGISTRY_LOGIN_SERVER}}/samples/adservice
           push: true    
      
       
