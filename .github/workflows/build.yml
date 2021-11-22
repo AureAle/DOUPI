@@ -96,6 +96,6 @@ jobs:
       - run: |
           az account set --subscription c4774376-bc4c-48e6-93eb-c0ac26c6345d
           az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
-
+#pls run
       - run: |
           helm install boutique -n boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart 
