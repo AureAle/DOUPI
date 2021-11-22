@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,14 +19,40 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     strategy:
       matrix:
-          url: ["src/adservice"]
-          name: ["adservice"]
+        url:
+          [
+            "src/adservice",
+            "src/cartservice/src",
+            "src/checkoutservice",
+            "src/currencyservice",
+            "src/emailservice",
+            "src/frontend",
+            "src/loadgenerator",
+            "src/paymentservice",
+            "src/productcatalogservice",
+            "src/recommendationservice",
+            "src/shippingservice",
+          ]
+        name:
+          [
+            "adservice",
+            "cartservice",
+            "checkoutservice",
+            "currencyservice",
+            "emailservice",
+            "frontend",
+            "loadgenerator",
+            "paymentservice",
+            "productcatalogservice",
+            "recommendationservice",
+            "shippingservice",
+          ]
     steps:
-      # Checks-out your repository, Clones the repository into the job environment 
-      - name: 'Checkout GitHub Action'
+      # Checks-out your repository, Clones the repository into the job environment
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@v2
-      
-      - name: 'Login via Azure CLI'
+
+      - name: "Login via Azure CLI"
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -36,13 +62,8 @@ jobs:
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }} 
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run:  | 
-            docker build ${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.name }}:latest
-            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.name }}:latest
-
-
-
-
-
+      - run: |
+          docker build ${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.name }}:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.name }}:latest
