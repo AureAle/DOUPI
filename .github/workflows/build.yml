@@ -99,7 +99,7 @@ jobs:
       #pls run
       - run: |
 
-          $VAR1 = helm ls -n boutique | awk 'NR==2{print $1}'
+          VAR1=$(helm ls -n boutique | awk 'NR==2{print $1}')
 
           if [ "$VAR1" == "boutique" ]; then
               helm uninstall boutique -n boutique
