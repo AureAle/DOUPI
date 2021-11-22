@@ -61,7 +61,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: "5.0.201"
-
       - name: Go Unit Tests
         timeout-minutes: 10
       - run: |
@@ -71,4 +70,3 @@ jobs:
             go test
             popd
           done
-          
