@@ -99,4 +99,5 @@ jobs:
 
       - run: |
           pwd
+          ls -al
           helm install boutique -f boutiquechart/templates/service.yaml boutiquechart 
