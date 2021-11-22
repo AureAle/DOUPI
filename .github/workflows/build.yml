@@ -27,10 +27,14 @@ jobs:
             go test
             popd
           done
+      - name: C# Unit Tests
+        timeout-minutes: 10
+        run: |
+          dotnet test src/cartservice/          
 
   # This workflow contains a single job called "build"
   build:
-    if: always()
+    if: ${{ !failure() }}
     needs: [code-tests]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
