@@ -103,7 +103,8 @@ jobs:
 
           if [ "$VAR1" == "boutique" ]; then
               helm uninstall boutique -n boutique
-              sleep 20
+              sleep 21
+          
           fi
 
           helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
