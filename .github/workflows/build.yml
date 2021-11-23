@@ -96,15 +96,13 @@ jobs:
       - run: |
           az account set --subscription c4774376-bc4c-48e6-93eb-c0ac26c6345d
           az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
-      
+
       - run: |
 
           VAR1=$(helm ls -n boutique | awk 'NR==2{print $1}')
 
           if [ "$VAR1" == "boutique" ]; then
-              helm uninstall boutique -n boutique
-              sleep 21
-          
+              helm upgrade boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart
+          else
+              helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
           fi
-
-          helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
