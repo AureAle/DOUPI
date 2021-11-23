@@ -74,8 +74,8 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build src/${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:${{ github.sha }}
+          docker build src/${{ matrix.url }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/samples/${{ matrix.url }}:latest
 
   deploy:
     if: ${{ !failure() }}
