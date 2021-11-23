@@ -100,9 +100,8 @@ jobs:
       - run: |
 
           VAR1=$(helm ls -n boutique | awk 'NR==2{print $1}')
-
           if [ "$VAR1" == "boutique" ]; then
-              helm upgrade boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart
-          else
-              helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
+            helm uninstall boutique -n boutique
+            sleep 22
           fi
+          helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
