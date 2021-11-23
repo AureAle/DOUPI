@@ -98,7 +98,6 @@ jobs:
           az aks get-credentials --resource-group aurelia-perez --name k8sDevPI
 
       - run: |
-
           unset VAR1
           VAR1=$(helm ls -n boutique | awk 'NR==2{print $1}')
           if [ "$VAR1" == "boutique" ]; then
