@@ -104,4 +104,5 @@ jobs:
               helm uninstall boutique -n boutique --wait
           fi
           sleep 60
+      - run: |
           helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique --set imagePullPolicy=Always
