@@ -34,6 +34,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/emailservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
@@ -89,6 +90,7 @@ spec:
       containers:
         - name: server
           image: rgdevcentraluspi.azurecr.io/samples/checkoutservice:latest
+          imagePullPolicy: Always
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -159,6 +161,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/recommendationservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -220,6 +223,7 @@ spec:
       containers:
         - name: server
           image: rgdevcentraluspi.azurecr.io/samples/frontend:latest
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -319,6 +323,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/paymentservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 50051
         env:
@@ -369,6 +374,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/productcatalogservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3550
         env:
@@ -427,6 +433,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/cartservice/src:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 7070
         env:
@@ -500,6 +507,7 @@ spec:
       containers:
       - name: main
         image: rgdevcentraluspi.azurecr.io/samples/loadgenerator:latest
+        imagePullPolicy: Always
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -531,6 +539,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/currencyservice:latest
+        imagePullPolicy: Always
         ports:
         - name: grpc
           containerPort: 7000
@@ -587,6 +596,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/shippingservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 50051
         env:
@@ -699,6 +709,7 @@ spec:
       containers:
       - name: server
         image: rgdevcentraluspi.azurecr.io/samples/adservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 9555
         env:
