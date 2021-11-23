@@ -7,7 +7,7 @@
 #     helm uninstall boutique -n boutique
 # echo "Entre---------"
 # fi
-# sleep 35
+# sleep 50
 # helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
 # echo "Pase--------"
 

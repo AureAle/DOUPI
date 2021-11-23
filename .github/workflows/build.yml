@@ -101,7 +101,7 @@ jobs:
           unset VAR1
           VAR1=$(helm ls -n boutique | awk 'NR==2{print $1}')
           if [ "$VAR1" == "boutique" ]; then
-              helm uninstall boutique -n boutique
+              helm uninstall boutique -n boutique --wait
           fi
           sleep 60
-          helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique
+          helm install boutique -f BoutiqueChart/templates/service.yaml BoutiqueChart  --create-namespace --namespace boutique --set imagePullPolicy=Always
